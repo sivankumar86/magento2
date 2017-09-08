@@ -1,0 +1,19 @@
+version: '2'
+services:
+    magento2-app:
+        image: magento2
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATASOURCE_URL=jdbc:mysql://magento2-mysql:3306/magento2?useUnicode=true&characterEncoding=utf8&useSSL=false
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+            - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=magento2-elasticsearch:9300
+        ports:
+            - 8080:8080
+    magento2-mysql:
+        extends:
+            file: mysql.yml
+            service: magento2-mysql
+    magento2-elasticsearch:
+        extends:
+            file: elasticsearch.yml
+            service: magento2-elasticsearch
